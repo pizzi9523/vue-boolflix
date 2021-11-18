@@ -62,7 +62,12 @@
                     <span>0</span>
                   </div>
                 </div>
-                <div class="overview">{{ movie.overview }}</div>
+                <div v-if="movie.overview.length < 600" class="overview">
+                  {{ movie.overview }}
+                </div>
+                <div v-else class="overview">
+                  {{ movie.overview.substr(0, 600) + "..." }}
+                </div>
               </div>
             </div>
           </div>
