@@ -15,5 +15,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.searchBox {
+  text-align: center;
+}
 </style>
