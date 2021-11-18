@@ -1,9 +1,8 @@
 <template>
   <main>
-    <SearchMovies @search-movies="search" />
     <div class="container">
-      <ul class="row" v-if="allSearch.length > 0">
-        <li class="col-3" v-for="movie in allSearch" :key="movie.id">
+      <ul class="row" v-if="this.Searched.length > 0">
+        <li class="col-3" v-for="movie in this.Searched" :key="movie.id">
           <div class="movie">
             <div class="img_wrapper" v-if="movie.poster_path !== null">
               <img
@@ -71,75 +70,21 @@
 </template>
 
 <script>
-import axios from "axios";
-import SearchMovies from "./SearchMovies.vue";
 export default {
-  mounted() {
-    setTimeout(this.callApi, 1 * 1000);
-  },
-
-  data() {
-    return {
-      searchSelected: "",
-      movies: [],
-      series: [],
-    };
-  },
-  components: {
-    SearchMovies,
-  },
-
-  methods: {
-    search(movie) {
-      if (movie.length > 0) {
-        this.searchSelected = movie;
-
-        var config = {
-          method: "get",
-          url: `https://api.themoviedb.org/3/search/movie?api_key=33e1e99b35059079af3232f95a0930b3&query=${this.searchSelected}`,
-        };
-
-        var config_1 = {
-          method: "get",
-          url: `https://api.themoviedb.org/3/search/tv?api_key=33e1e99b35059079af3232f95a0930b3&language=en-US&query=${this.searchSelected}`,
-        };
-
-        axios(config)
-          .then((response) => {
-            // console.log(response.data.results);
-            this.movies = response.data.results;
-            // console.log(this.movies);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-
-        axios(config_1)
-          .then((response) => {
-            // console.log(response.data.results);
-            this.series = response.data.results;
-            // console.log(this.movies);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
-    },
-  },
-
-  computed: {
-    allSearch() {
-      return [...this.movies, ...this.series];
-    },
+  props: {
+    Searched: Array,
   },
 };
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
 ul {
   list-style: none;
   .movie {
     padding: 5px;
+    .img_wrapper {
+      width: fit-content;
+    }
   }
 }
 
