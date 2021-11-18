@@ -38,22 +38,24 @@ export default {
 
   methods: {
     search(movie) {
-      this.searchSelected = movie;
+      if (movie.length > 0) {
+        this.searchSelected = movie;
 
-      var config = {
-        method: "get",
-        url: `https://api.themoviedb.org/3/search/movie?api_key=33e1e99b35059079af3232f95a0930b3&query=${this.searchSelected}`,
-      };
+        var config = {
+          method: "get",
+          url: `https://api.themoviedb.org/3/search/movie?api_key=33e1e99b35059079af3232f95a0930b3&query=${this.searchSelected}`,
+        };
 
-      axios(config)
-        .then((response) => {
-          // console.log(response.data.results);
-          this.movies = response.data.results;
-          // console.log(this.movies);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+        axios(config)
+          .then((response) => {
+            // console.log(response.data.results);
+            this.movies = response.data.results;
+            // console.log(this.movies);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
   },
 };
