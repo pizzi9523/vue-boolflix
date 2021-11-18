@@ -18,5 +18,6 @@ export default {
 <style lang="scss">
 .searchBox {
   text-align: center;
+  padding: 20px;
 }
 </style>

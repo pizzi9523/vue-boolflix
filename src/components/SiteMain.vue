@@ -2,7 +2,7 @@
   <main>
     <SearchMovies @search-movies="search" />
     <div class="container">
-      <ul class="row">
+      <ul class="row" v-if="allSearch.length > 0">
         <li class="col-3" v-for="movie in allSearch" :key="movie.id">
           <div class="movie">
             <div class="img_wrapper" v-if="movie.poster_path !== null">
@@ -65,6 +65,7 @@
           </div>
         </li>
       </ul>
+      <div class="nothing" v-else>Nothing To Show 😢</div>
     </div>
   </main>
 </template>
@@ -140,5 +141,10 @@ ul {
   .movie {
     padding: 5px;
   }
+}
+
+.nothing {
+  text-align: center;
+  font-size: 30px;
 }
 </style>
