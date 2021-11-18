@@ -40,8 +40,18 @@
               <span> {{ movie.original_language }}</span>
             </div>
             <div class="vote">
-              <span>Voto:</span>
-              <span>{{ movie.vote_average }}</span>
+              <div v-if="parseInt((movie.vote_average / 2).toFixed(0)) !== 0">
+                <span>Voto: </span>
+                <span
+                  v-for="n in parseInt((movie.vote_average / 2).toFixed(0))"
+                  :key="n.id"
+                  >⭐</span
+                >
+              </div>
+              <div v-else>
+                <span>Voto: </span>
+                <span>0</span>
+              </div>
             </div>
           </div>
         </li>
