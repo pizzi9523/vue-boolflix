@@ -3,16 +3,38 @@
     <SearchMovies @search-movies="search" />
     <div class="container">
       <ul class="row">
-        <li class="col-3" v-for="movie in movies" :key="movie.id">
+        <li class="col-3" v-for="movie in allSearch" :key="movie.id">
           <div class="movie">
-            <div class="title">Titolo: {{ movie.title }}</div>
+            <div class="title">
+              <span>Titolo: </span>
+              <span>{{ movie.title || movie.name }}</span>
+            </div>
             <div class="original-title">
-              Titolo Originale: {{ movie.original_title }}
+              <span>Titolo Originale: </span>
+              <span>{{ movie.original_title || movie.original_name }}</span>
             </div>
             <div class="language">
-              Lingua: <flag :iso="movie.original_language" />
+              <span>Lingua: </span>
+              <span v-if="movie.original_language == 'en'">
+                <flag iso="gb" />
+              </span>
+              <span v-else-if="movie.original_language == 'zh'">
+                <flag iso="cn" />
+              </span>
+              <span v-else-if="movie.original_language == 'ja'">
+                <flag iso="jp" />
+              </span>
+              <span v-else-if="movie.original_language == 'da'">
+                <flag iso="dm" />
+              </span>
+              <span v-else>
+                <flag :iso="movie.original_language" />
+              </span>
             </div>
-            <div class="vote">Voto: {{ movie.vote_average }}</div>
+            <div class="vote">
+              <span>Voto:</span>
+              <span>{{ movie.vote_average }}</span>
+            </div>
           </div>
         </li>
       </ul>
@@ -32,6 +54,7 @@ export default {
     return {
       searchSelected: "",
       movies: [],
+      series: [],
     };
   },
   components: {
@@ -48,6 +71,11 @@ export default {
           url: `https://api.themoviedb.org/3/search/movie?api_key=33e1e99b35059079af3232f95a0930b3&query=${this.searchSelected}`,
         };
 
+        var config_1 = {
+          method: "get",
+          url: `https://api.themoviedb.org/3/search/tv?api_key=33e1e99b35059079af3232f95a0930b3&language=en-US&query=${this.searchSelected}`,
+        };
+
         axios(config)
           .then((response) => {
             // console.log(response.data.results);
@@ -57,7 +85,23 @@ export default {
           .catch(function (error) {
             console.log(error);
           });
+
+        axios(config_1)
+          .then((response) => {
+            // console.log(response.data.results);
+            this.series = response.data.results;
+            // console.log(this.movies);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
+    },
+  },
+
+  computed: {
+    allSearch() {
+      return [...this.movies, ...this.series];
     },
   },
 };
