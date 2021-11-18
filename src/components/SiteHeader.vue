@@ -5,6 +5,12 @@
       <ul class="row">
         <li class="col-3" v-for="movie in allSearch" :key="movie.id">
           <div class="movie">
+            <div class="img_wrapper">
+              <img
+                :src="'https://image.tmdb.org/t/p/w342' + movie.poster_path"
+                alt=""
+              />
+            </div>
             <div class="title">
               <span>Titolo: </span>
               <span>{{ movie.title || movie.name }}</span>
@@ -15,6 +21,7 @@
             </div>
             <div class="language">
               <span>Lingua: </span>
+
               <span v-if="movie.original_language == 'en'">
                 <flag iso="gb" />
               </span>
@@ -30,6 +37,7 @@
               <span v-else>
                 <flag :iso="movie.original_language" />
               </span>
+              <span> {{ movie.original_language }}</span>
             </div>
             <div class="vote">
               <span>Voto:</span>
