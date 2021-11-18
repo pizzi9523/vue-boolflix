@@ -5,12 +5,21 @@
       <ul class="row">
         <li class="col-3" v-for="movie in allSearch" :key="movie.id">
           <div class="movie">
-            <div class="img_wrapper">
+            <div class="img_wrapper" v-if="movie.poster_path !== null">
               <img
                 :src="'https://image.tmdb.org/t/p/w342' + movie.poster_path"
                 alt=""
               />
             </div>
+            <div v-else>
+              <img
+                width="342"
+                height="513"
+                src="https://developers.google.com/maps/documentation/maps-static/images/error-image-generic.png?hl=it"
+                alt=""
+              />
+            </div>
+
             <div class="title">
               <span>Titolo: </span>
               <span>{{ movie.title || movie.name }}</span>
