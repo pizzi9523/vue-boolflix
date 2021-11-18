@@ -9,7 +9,9 @@
             <div class="original-title">
               Titolo Originale: {{ movie.original_title }}
             </div>
-            <div class="language">Lingua: {{ movie.original_language }}</div>
+            <div class="language">
+              Lingua: <flag :iso="movie.original_language" />
+            </div>
             <div class="vote">Voto: {{ movie.vote_average }}</div>
           </div>
         </li>
@@ -61,7 +63,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 ul {
   list-style: none;
   .movie {
