@@ -68,13 +68,10 @@
                 <div v-else class="overview">
                   {{ movie.overview.substr(0, 600) + "..." }}
                 </div>
-                <div
-                  class="cast"
-                  v-for="actor in findCast(movie.id)"
-                  :key="actor"
-                >
+                <div class="cast">
                   <span>Cast:</span>
-                  <span>{{ actor }},</span>
+                  <span v-for="actor in test" :key="actor"> {{ actor }},</span>
+                  <a href="#" @click="findCast(movie.id)">Show Cast</a>
                 </div>
               </div>
             </div>
@@ -89,25 +86,33 @@
 <script>
 import axios from "axios";
 export default {
+  data() {
+    return {
+      test: [],
+      clicked: false,
+    };
+  },
   props: {
     Searched: Array,
   },
 
   methods: {
     findCast(id) {
-      let castMovie = [];
-
       axios
         .get(
           `https://api.themoviedb.org/3/movie/${id}/credits?api_key=33e1e99b35059079af3232f95a0930b3`
         )
         .then((response) => {
-          for (let i = 0; i < 5; i++) {
-            castMovie.push(response.data.cast[i].name);
+          while (this.test.length < 5) {
+            for (let i = 0; i < 5; i++) {
+              this.test.push(response.data.cast[i].name);
+            }
+            console.log(this.test);
           }
-          console.log(castMovie);
+          this.clicked = true;
+
+          //console.log(castMovie);
         });
-      return castMovie;
     },
   },
 };
