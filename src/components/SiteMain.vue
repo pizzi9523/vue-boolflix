@@ -29,10 +29,12 @@
                   <span>Titolo: </span>
                   <span>{{ movie.title || movie.name }}</span>
                 </div>
+                <!-- /.title  -->
                 <div class="original-title">
                   <span>Titolo Originale: </span>
                   <span>{{ movie.original_title || movie.original_name }}</span>
                 </div>
+                <!-- /.original-title  -->
                 <div class="language">
                   <span>Lingua: </span>
 
@@ -53,6 +55,7 @@
                   </span>
                   <span> {{ movie.original_language }}</span>
                 </div>
+                <!-- /.language -->
                 <div class="vote">
                   <div
                     v-if="parseInt((movie.vote_average / 2).toFixed(0)) !== 0"
@@ -69,12 +72,14 @@
                     <span>0</span>
                   </div>
                 </div>
+                <!-- /.vote  -->
                 <div v-if="movie.overview.length < 600" class="overview">
                   {{ movie.overview }}
                 </div>
                 <div v-else class="overview">
                   {{ movie.overview.substr(0, 600) + "..." }}
                 </div>
+                <!-- /.overview  -->
                 <div class="cast">
                   <span>Cast: </span>
                   <span v-for="actor in castMovie" :key="actor">
@@ -82,13 +87,20 @@
                   </span>
                   <button @click="findCast(movie.id, index)">Show Cast</button>
                 </div>
+                <!-- /.cast  -->
               </div>
+              <!-- /.info_movie  -->
             </div>
+            <!-- /.img_wrapper  -->
           </div>
+          <!-- /.movie  -->
         </li>
+        <!-- /.col-3  -->
       </ul>
+      <!-- /.row  -->
       <div class="nothing" v-else>Nothing To Show 😢</div>
     </div>
+    <!-- /.container  -->
   </main>
 </template>
 
@@ -107,6 +119,9 @@ export default {
 
   methods: {
     findCast(id, index) {
+      this.pointer = index;
+      console.log(index);
+      console.log(this.pointer);
       console.log(id);
       this.castMovie = [];
       axios
@@ -117,10 +132,7 @@ export default {
           for (let i = 0; i < 5; i++) {
             this.castMovie.push(response.data.cast[i].name);
           }
-          console.log(this.castMovie);
-          this.pointer = index;
-          console.log(index);
-          console.log(this.pointer);
+          //console.log(this.castMovie);
 
           //console.log(castMovie);
         });
