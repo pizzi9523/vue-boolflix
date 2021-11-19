@@ -2,10 +2,17 @@
   <main>
     <div class="container">
       <ul class="row" v-if="this.Searched.length > 0">
-        <li class="col-3" v-for="movie in this.Searched" :key="movie.id">
+        <li
+          class="col-3"
+          v-for="(movie, index) in this.Searched"
+          :key="movie.id"
+          :index="index"
+        >
           <div class="movie">
             <div class="img_wrapper">
               <img
+                height="513"
+                width="342"
                 v-if="movie.poster_path !== null"
                 :src="'https://image.tmdb.org/t/p/w342' + movie.poster_path"
                 alt=""
@@ -69,11 +76,15 @@
                   {{ movie.overview.substr(0, 600) + "..." }}
                 </div>
                 <div class="cast">
-                  <span>Cast:</span>
-                  <span v-for="actor in castMovie" :key="actor">
-                    {{ actor }},</span
+                  <span>Cast: </span>
+                  <span
+                    v-show="this.pointer == index"
+                    v-for="actor in castMovie"
+                    :key="actor"
                   >
-                  <button @click="findCast(movie.id)">Show Cast</button>
+                    {{ actor }},
+                  </span>
+                  <button @click="findCast(movie.id, index)">Show Cast</button>
                 </div>
               </div>
             </div>
@@ -91,6 +102,7 @@ export default {
   data() {
     return {
       castMovie: [],
+      pointer: 0,
     };
   },
   props: {
@@ -98,7 +110,7 @@ export default {
   },
 
   methods: {
-    findCast(id) {
+    findCast(id, index) {
       console.log(id);
       this.castMovie = [];
       axios
@@ -108,8 +120,11 @@ export default {
         .then((response) => {
           for (let i = 0; i < 5; i++) {
             this.castMovie.push(response.data.cast[i].name);
-            console.log(this.castMovie);
           }
+          console.log(this.castMovie);
+          this.pointer = index;
+          console.log(index);
+          console.log(this.pointer);
 
           //console.log(castMovie);
         });
