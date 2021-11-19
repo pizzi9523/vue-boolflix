@@ -64,8 +64,14 @@
                     <span
                       v-for="n in parseInt((movie.vote_average / 2).toFixed(0))"
                       :key="n.id"
-                      >⭐</span
-                    >
+                      ><i class="fa fa-star" aria-hidden="true"></i
+                    ></span>
+                    <span
+                      v-for="n in 5 -
+                      parseInt((movie.vote_average / 2).toFixed(0))"
+                      :key="n.id"
+                      ><i class="far fa-star"></i
+                    ></span>
                   </div>
                   <div v-else>
                     <span>Voto: </span>
@@ -135,6 +141,9 @@ export default {
           //console.log(this.castMovie);
 
           //console.log(castMovie);
+        })
+        .catch((e) => {
+          console.log(e, "ERROR");
         });
     },
   },
@@ -174,6 +183,9 @@ ul {
         justify-content: center;
         font-size: 18px;
         visibility: hidden;
+        .fa-star {
+          color: gold;
+        }
       }
     }
   }
