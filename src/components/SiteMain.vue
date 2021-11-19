@@ -70,8 +70,10 @@
                 </div>
                 <div class="cast">
                   <span>Cast:</span>
-                  <span v-for="actor in test" :key="actor"> {{ actor }},</span>
-                  <a href="#" @click="findCast(movie.id)">Show Cast</a>
+                  <span v-for="actor in castMovie" :key="actor">
+                    {{ actor }},</span
+                  >
+                  <button @click="findCast(movie.id)">Show Cast</button>
                 </div>
               </div>
             </div>
@@ -88,8 +90,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      test: [],
-      clicked: false,
+      castMovie: [],
     };
   },
   props: {
@@ -98,18 +99,17 @@ export default {
 
   methods: {
     findCast(id) {
+      console.log(id);
+      this.castMovie = [];
       axios
         .get(
           `https://api.themoviedb.org/3/movie/${id}/credits?api_key=33e1e99b35059079af3232f95a0930b3`
         )
         .then((response) => {
-          while (this.test.length < 5) {
-            for (let i = 0; i < 5; i++) {
-              this.test.push(response.data.cast[i].name);
-            }
-            console.log(this.test);
+          for (let i = 0; i < 5; i++) {
+            this.castMovie.push(response.data.cast[i].name);
+            console.log(this.castMovie);
           }
-          this.clicked = true;
 
           //console.log(castMovie);
         });
