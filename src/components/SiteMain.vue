@@ -88,11 +88,18 @@
                 <!-- /.overview  -->
                 <div class="cast">
                   <span>Cast: </span>
-                  <span v-for="actor in castMovie" :key="actor">
-                    {{ actor }},
-                  </span>
-                  <button @click="findCast(movie.id, index)">Show Cast</button>
+
+                  <div>
+                    <span
+                      v-show="castMovie[index].length > 0"
+                      v-for="x in castMovie[index]"
+                      :key="x.id"
+                    >
+                      {{ x }},
+                    </span>
+                  </div>
                 </div>
+                <button @click="findCast(movie.id, index)">Show Cast</button>
                 <!-- /.cast  -->
               </div>
               <!-- /.info_movie  -->
@@ -119,6 +126,7 @@ export default {
       pointer: 0,
     };
   },
+
   props: {
     Searched: Array,
   },
@@ -129,16 +137,17 @@ export default {
       console.log(index);
       console.log(this.pointer);
       console.log(id);
-      this.castMovie = [];
       axios
         .get(
           `https://api.themoviedb.org/3/movie/${id}/credits?api_key=33e1e99b35059079af3232f95a0930b3`
         )
         .then((response) => {
+          this.castMovie[index] = [];
           for (let i = 0; i < 5; i++) {
-            this.castMovie.push(response.data.cast[i].name);
+            this.castMovie[index].push(response.data.cast[i].name);
+            // this.castMovie[index].push(response.data.cast[i].name);
           }
-          //console.log(this.castMovie);
+          console.log(this.castMovie);
 
           //console.log(castMovie);
         })
