@@ -68,6 +68,14 @@
                 <div v-else class="overview">
                   {{ movie.overview.substr(0, 600) + "..." }}
                 </div>
+                <div
+                  class="cast"
+                  v-for="actor in findCast(movie.id)"
+                  :key="actor"
+                >
+                  <span>Cast:</span>
+                  <span>{{ actor }},</span>
+                </div>
               </div>
             </div>
           </div>
@@ -79,9 +87,28 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   props: {
     Searched: Array,
+  },
+
+  methods: {
+    findCast(id) {
+      let castMovie = [];
+
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${id}/credits?api_key=33e1e99b35059079af3232f95a0930b3`
+        )
+        .then((response) => {
+          for (let i = 0; i < 5; i++) {
+            castMovie.push(response.data.cast[i].name);
+          }
+          console.log(castMovie);
+        });
+      return castMovie;
+    },
   },
 };
 </script>
