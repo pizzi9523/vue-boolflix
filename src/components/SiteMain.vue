@@ -77,11 +77,7 @@
                 </div>
                 <div class="cast">
                   <span>Cast: </span>
-                  <span
-                    v-show="this.pointer == index"
-                    v-for="actor in castMovie"
-                    :key="actor"
-                  >
+                  <span v-for="actor in castMovie" :key="actor">
                     {{ actor }},
                   </span>
                   <button @click="findCast(movie.id, index)">Show Cast</button>
