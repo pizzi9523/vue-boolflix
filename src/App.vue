@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <SiteHeader @search-movies="search" />
-    <SiteMain :Searched="allSearch" />
+    <SiteMain @find-cast="searchCastMovie" :Searched="allSearch" />
 
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>
@@ -62,6 +62,29 @@ export default {
             console.log(error);
           });
       }
+    },
+    searchCastMovie(id) {
+      let castMovie = [];
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${id}/credits?api_key=33e1e99b35059079af3232f95a0930b3`
+        )
+        .then((response) => {
+          for (let i = 0; i < 5; i++) {
+            castMovie.push(response.data.cast[i].name);
+            // this.castMovie[index].push(response.data.cast[i].name);
+          }
+          console.log(castMovie);
+          this.allSearch.forEach((movie) => {
+            if (movie.id == id) {
+              movie.cast = castMovie;
+            }
+          });
+          console.log(this.allSearch);
+        })
+        .catch((e) => {
+          console.log(e, "ERROR");
+        });
     },
   },
   name: "App",

@@ -89,17 +89,17 @@
                 <div class="cast">
                   <span>Cast: </span>
 
-                  <div>
-                    <span
-                      v-show="castMovie[index].length > 0"
-                      v-for="x in castMovie[index]"
-                      :key="x.id"
-                    >
-                      {{ x }},
-                    </span>
-                  </div>
+                  <span
+                    v-show="movie.cast"
+                    v-for="actor in movie.cast"
+                    :key="actor"
+                  >
+                    {{ actor }}
+                  </span>
+                  <button @click="$emit('find-cast', movie.id)">
+                    Show Cast
+                  </button>
                 </div>
-                <button @click="findCast(movie.id, index)">Show Cast</button>
                 <!-- /.cast  -->
               </div>
               <!-- /.info_movie  -->
@@ -118,11 +118,11 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 export default {
   data() {
     return {
-      castMovie: [],
+      // castMovie: [],
       pointer: 0,
     };
   },
@@ -132,7 +132,7 @@ export default {
   },
 
   methods: {
-    findCast(id, index) {
+    /* findCast(id, index) {
       this.pointer = index;
       console.log(index);
       console.log(this.pointer);
@@ -154,14 +154,14 @@ export default {
         .catch((e) => {
           console.log(e, "ERROR");
         });
-    },
+    },*/
   },
 };
 </script>
 
 <style  lang="scss">
 main {
-  background-color: rgb(92, 91, 91);
+  background-color: rgb(59, 58, 58);
   padding: 50px;
 }
 ul {
