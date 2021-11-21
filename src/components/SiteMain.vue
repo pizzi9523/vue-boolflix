@@ -2,12 +2,7 @@
   <main>
     <div class="container">
       <ul class="row" v-if="this.Searched.length > 0">
-        <li
-          class="col-3"
-          v-for="(movie, index) in this.Searched"
-          :key="movie.id"
-          :index="index"
-        >
+        <li class="col-3" v-for="movie in this.Searched" :key="movie.id">
           <div class="movie">
             <div class="img_wrapper">
               <img
@@ -86,14 +81,19 @@
                   {{ movie.overview.substr(0, 600) + "..." }}
                 </div>
                 <!-- /.overview  -->
+                <div class="genres">
+                  Genere:
+                  <span v-for="genre in allGenres" :key="genre.id">
+                    <span v-if="movie.genre_ids.includes(genre.id)">
+                      {{ genre.name }}
+                    </span>
+                  </span>
+                </div>
+                <!-- /.genres  -->
                 <div class="cast">
                   <span>Cast: </span>
 
-                  <span
-                    v-show="movie.cast"
-                    v-for="actor in movie.cast"
-                    :key="actor"
-                  >
+                  <span v-for="actor in movie.cast" :key="actor">
                     {{ actor }}
                   </span>
                   <button @click="$emit('find-cast', movie.id)">
@@ -118,17 +118,29 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 export default {
   data() {
     return {
       // castMovie: [],
       pointer: 0,
+      allGenres: [],
     };
   },
 
   props: {
     Searched: Array,
+  },
+
+  mounted() {
+    axios
+      .get(
+        "https://api.themoviedb.org/3/genre/movie/list?api_key=33e1e99b35059079af3232f95a0930b3"
+      )
+      .then((response) => {
+        this.allGenres = response.data.genres;
+        console.log(this.allGenres);
+      });
   },
 
   methods: {

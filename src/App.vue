@@ -84,6 +84,11 @@ export default {
         })
         .catch((e) => {
           console.log(e, "ERROR");
+          this.allSearch.forEach((movie) => {
+            if (movie.id == id) {
+              movie.cast = "No cast to show";
+            }
+          });
         });
     },
   },
