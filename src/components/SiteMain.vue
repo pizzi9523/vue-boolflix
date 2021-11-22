@@ -1,8 +1,10 @@
 <template>
   <main>
+    <FilterFilmGenres @filter-genre="searchByFilter" :genres="allGenres" />
+
     <div class="container">
-      <ul class="row" v-if="this.Searched.length > 0">
-        <li class="col-3" v-for="movie in this.Searched" :key="movie.id">
+      <ul class="row" v-if="this.filterGenres.length > 0">
+        <li class="col-3" v-for="movie in this.filterGenres" :key="movie.id">
           <div class="movie">
             <div class="img_wrapper">
               <img
@@ -48,7 +50,6 @@
                   <span v-else>
                     <flag :iso="movie.original_language" />
                   </span>
-                  <span> {{ movie.original_language }}</span>
                 </div>
                 <!-- /.language -->
                 <div class="vote">
@@ -74,11 +75,11 @@
                   </div>
                 </div>
                 <!-- /.vote  -->
-                <div v-if="movie.overview.length < 600" class="overview">
+                <div v-if="movie.overview.length < 500" class="overview">
                   {{ movie.overview }}
                 </div>
                 <div v-else class="overview">
-                  {{ movie.overview.substr(0, 600) + "..." }}
+                  {{ movie.overview.substr(0, 500) + "..." }}
                 </div>
                 <!-- /.overview  -->
                 <div class="genres">
@@ -96,7 +97,11 @@
                   <span v-for="actor in movie.cast" :key="actor">
                     {{ actor }}
                   </span>
-                  <button @click="$emit('find-cast', movie.id)">
+                  <button
+                    class="show_cast"
+                    v-show="!movie.cast"
+                    @click="$emit('find-cast', movie.id)"
+                  >
                     Show Cast
                   </button>
                 </div>
@@ -119,12 +124,14 @@
 
 <script>
 import axios from "axios";
+import FilterFilmGenres from "./FilterFilmGenres.vue";
 export default {
   data() {
     return {
       // castMovie: [],
       pointer: 0,
       allGenres: [],
+      selectedGenres: "",
     };
   },
 
@@ -139,11 +146,28 @@ export default {
       )
       .then((response) => {
         this.allGenres = response.data.genres;
-        console.log(this.allGenres);
+        //console.log(this.allGenres);
       });
   },
 
+  computed: {
+    filterGenres() {
+      if (this.selectedGenres === "") {
+        return this.Searched;
+      } else {
+        const filteredList = this.Searched.filter((movie) => {
+          return movie.genre_ids.includes(this.selectedGenres);
+        });
+        return filteredList;
+      }
+    },
+  },
+
   methods: {
+    searchByFilter(id) {
+      //console.log(id);
+      this.selectedGenres = id;
+    },
     /* findCast(id, index) {
       this.pointer = index;
       console.log(index);
@@ -168,13 +192,21 @@ export default {
         });
     },*/
   },
+
+  components: {
+    FilterFilmGenres,
+  },
 };
 </script>
 
 <style  lang="scss">
 main {
   background-color: rgb(59, 58, 58);
-  padding: 50px;
+  padding: 0 50px;
+
+  nav {
+    padding: 25px 0;
+  }
 }
 ul {
   list-style: none;
@@ -187,6 +219,9 @@ ul {
         .info_movie {
           visibility: visible;
         }
+        img {
+          filter: brightness(0.3);
+        }
       }
       .info_movie {
         padding: 20px;
@@ -196,8 +231,8 @@ ul {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-color: black;
         color: white;
+        background-color: black;
         background-size: cover;
         display: flex;
         flex-direction: column;
@@ -207,6 +242,17 @@ ul {
         .fa-star {
           color: gold;
         }
+        button.show_cast {
+          padding: 0rem 0.5rem;
+          background-color: transparent;
+          color: white;
+          border: none;
+          font-weight: 600;
+          &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+          }
+        }
       }
     }
   }
@@ -215,5 +261,6 @@ ul {
 .nothing {
   text-align: center;
   font-size: 30px;
+  color: white;
 }
 </style>
