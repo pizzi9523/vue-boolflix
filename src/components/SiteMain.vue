@@ -75,11 +75,11 @@
                   </div>
                 </div>
                 <!-- /.vote  -->
-                <div v-if="movie.overview.length < 500" class="overview">
+                <div v-if="movie.overview.length < 1000" class="overview">
                   {{ movie.overview }}
                 </div>
                 <div v-else class="overview">
-                  {{ movie.overview.substr(0, 500) + "..." }}
+                  {{ movie.overview.substr(0, 1000) + "..." }}
                 </div>
                 <!-- /.overview  -->
                 <div class="genres">
@@ -203,6 +203,7 @@ export default {
 main {
   background-color: rgb(59, 58, 58);
   padding: 0 50px;
+  min-height: calc(100vh - 76px);
 
   nav {
     padding: 25px 0;
@@ -215,6 +216,7 @@ ul {
     .img_wrapper {
       width: fit-content;
       position: relative;
+
       &:hover {
         .info_movie {
           visibility: visible;
@@ -239,6 +241,27 @@ ul {
         justify-content: center;
         font-size: 18px;
         visibility: hidden;
+        div {
+          padding: 4px 0;
+        }
+        .overview {
+          overflow-y: auto;
+          &::-webkit-scrollbar {
+            width: 10px;
+          }
+          &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px white;
+            border-radius: 10px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: red;
+            border-radius: 10px;
+          }
+
+          ::-webkit-scrollbar-thumb:hover {
+            background: #b30000;
+          }
+        }
         .fa-star {
           color: gold;
         }

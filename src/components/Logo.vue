@@ -8,7 +8,7 @@ export default {};
 
 <style lang="scss">
 .logo {
-  padding: 10px;
+  padding: 20px;
   a {
     font-size: 30px;
     text-decoration: none;

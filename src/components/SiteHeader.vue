@@ -45,6 +45,10 @@ header {
       padding: 10px;
       background-color: red;
       border: none;
+      &:hover {
+        background: rgb(172, 17, 17);
+        cursor: pointer;
+      }
     }
   }
 }
