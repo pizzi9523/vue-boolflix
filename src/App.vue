@@ -75,9 +75,11 @@ export default {
             // this.castMovie[index].push(response.data.cast[i].name);
           }
           console.log(castMovie);
+
           this.allSearch.forEach((movie) => {
             if (movie.id == id) {
-              movie.cast = castMovie;
+              this.$set(movie, "cast", castMovie);
+              //movie.cast = castMovie;
             }
           });
           console.log(this.allSearch);
@@ -86,7 +88,9 @@ export default {
           console.log(e, "ERROR");
           this.allSearch.forEach((movie) => {
             if (movie.id == id) {
-              movie.cast = "No cast to show";
+              this.$set(movie, "cast", "-");
+
+              //movie.cast = "No cast to show";
             }
           });
         });
