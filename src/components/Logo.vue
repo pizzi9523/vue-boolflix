@@ -1,5 +1,5 @@
 <template>
-  <div class="logo">BOOLFIX</div>
+  <div class="logo"><a href="">BOOLFIX</a></div>
 </template>
 
 <script>
@@ -8,8 +8,11 @@ export default {};
 
 <style lang="scss">
 .logo {
-  color: red;
-  font-size: 30px;
   padding: 10px;
+  a {
+    font-size: 30px;
+    text-decoration: none;
+    color: red;
+  }
 }
 </style>

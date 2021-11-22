@@ -39,9 +39,12 @@ header {
     padding: 20px;
     input {
       padding: 10px;
+      border: none;
     }
     button {
       padding: 10px;
+      background-color: red;
+      border: none;
     }
   }
 }

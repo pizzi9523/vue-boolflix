@@ -74,7 +74,7 @@ export default {
             castMovie.push(response.data.cast[i].name);
             // this.castMovie[index].push(response.data.cast[i].name);
           }
-          console.log(castMovie);
+          //console.log(castMovie);
 
           this.allSearch.forEach((movie) => {
             if (movie.id == id) {
@@ -82,7 +82,7 @@ export default {
               //movie.cast = castMovie;
             }
           });
-          console.log(this.allSearch);
+          //console.log(this.allSearch);
         })
         .catch((e) => {
           console.log(e, "ERROR");
