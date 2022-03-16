@@ -1,24 +1,9 @@
-# vue-boolflix
+<h1> Replica Netflix vue.js API </h1> 
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+https://user-images.githubusercontent.com/84190473/158638193-87bd897e-4ce6-4d9a-baf2-ef2c2c0808bb.mp4
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
